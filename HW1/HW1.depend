@@ -1,6 +1,0 @@
-# depslib dependency file v1.0
-1569524186 source:/Users/anandchowdhary/Projects/university/cs168/HW1/main.cpp
-	<GLUT/glut.h>
-	<GL/glut.h>
-	<stdlib.h>
-
