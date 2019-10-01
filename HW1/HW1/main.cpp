@@ -16,15 +16,28 @@
 
 #include <iostream>
 #include <stdlib.h>
+#include <math.h>
+
+void drawPolygon(int sides, float x, float y, float scale) {
+    glBegin(GL_TRIANGLES);
+    for (int i = 0; i < sides; i++) {
+        // Here, we place points on a circle to make a polygon
+        // For example, when sides = 3, we draw an equilateral triangle
+        glVertex3f(
+            x + scale * cos(2 * M_PI / sides * i),
+            y + scale * sin(2 * M_PI / sides * i),
+            0.0
+        );
+    }
+    glEnd();
+}
 
 void redraw() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glColor3f(0, 0, 1);
-    glBegin(GL_TRIANGLES);
-    glVertex3f(0.1, 0.1, 0.0);
-    glVertex3f(0.5, 0.1, 0.0);
-    glVertex3f(0.1, 0.7, 0.0);
-    glEnd();
+
+    drawPolygon(3, 0.5, 0.5, 0.1);
+
     glutSwapBuffers();
 }
 
@@ -34,7 +47,7 @@ int main(int argc, char * argv[]) {
     glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH);
     glutCreateWindow("One triangle");
     glutPositionWindow(10,10);
-    glutReshapeWindow(500,500);
+    glutReshapeWindow(700,700);
     glClearColor(0.0,0.0,0.0,1.0);
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
