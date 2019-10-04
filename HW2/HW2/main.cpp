@@ -70,7 +70,7 @@ void redraw() {
     glBegin(GL_POLYGON);
     glVertex3f(topLeftX, topLeftY, 0.2);
     glVertex3f(centerX, centerY, 0.2);
-    glVertex3f(bottomLeftX, bottomRightY, 0.2);
+    glVertex3f(bottomLeftX, bottomLeftY, 0.2);
     glEnd();
     
     // LINES
@@ -148,10 +148,58 @@ void redraw() {
     glutSwapBuffers();
 }
 
+float diff(float x, float y, float X, float Y) {
+    return sqrt(pow((X - x), 2) + pow((Y - y), 2));
+}
+
 void mouseMove(int x, int y) {
-    std::cout << "MOUSE\n" << ((float) x / 700) << "  " << 1.0 - ((float) y / 700) << "\n";
-    topLeftX = ((float) x / 700);
-    topLeftY = (1.0 - ((float) y / 700));
+    float X = ((float) x / 700);
+    float Y = 1.0 - ((float) y / 700);
+    std::string selected = "top-left";
+    float minimumDistance = 1.0;
+    
+    // First, we select the point you want to move
+    if (diff(X, Y, topLeftX, topLeftY) < minimumDistance) {
+        selected = "top-left";
+        minimumDistance = diff(X, Y, topLeftX, topLeftY);
+    }
+    if (diff(X, Y, topRightX, topRightY) < minimumDistance) {
+        selected = "top-right";
+        minimumDistance = diff(X, Y, topRightX, topRightY);
+    }
+    if (diff(X, Y, bottomLeftX, bottomLeftY) < minimumDistance) {
+        selected = "bottom-left";
+        minimumDistance = diff(X, Y, bottomLeftX, bottomLeftY);
+    }
+    if (diff(X, Y, bottomRightX, bottomRightY) < minimumDistance) {
+        selected = "bottom-right";
+        minimumDistance = diff(X, Y, bottomRightX, bottomRightY);
+    }
+    if (diff(X, Y, centerX, centerY) < minimumDistance) {
+        selected = "center";
+        minimumDistance = diff(X, Y, centerX, centerY);
+    }
+    
+    std::cout << "MOUSE\n" << X << "  " << Y << " " << minimumDistance << " " << selected << "\n";
+
+    // Then, we move that point
+    if (selected == "top-left") {
+        topLeftX = X;
+        topLeftY = Y;
+    } else if (selected == "top-right") {
+        topRightX = X;
+        topRightY = Y;
+    } else if (selected == "bottom-left") {
+        bottomLeftX = X;
+        bottomLeftY = Y;
+    } else if (selected == "bottom-right") {
+        bottomRightX = X;
+        bottomRightY = Y;
+    } else {
+        centerX = X;
+        centerY = Y;
+    }
+
     redraw();
 }
 
