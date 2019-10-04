@@ -18,20 +18,63 @@
 #include <stdlib.h>
 #include <math.h>
 
+float topLeftX = 0.1;
+float topLeftY = 0.9;
+
+float topRightX = 0.9;
+float topRightY = 0.9;
+
+float centerX = 0.5;
+float centerY = 0.5;
+
+float bottomLeftX = 0.1;
+float bottomLeftY = 0.1;
+
+float bottomRightX = 0.9;
+float bottomRightY = 0.1;
 
 void redraw() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glEnable(GL_DEPTH_TEST);
-    
-    //
+
+    // Top polygon
+    glColor3f(0, 0, 1);
+    glBegin(GL_POLYGON);
+    glVertex3f(topLeftX, topLeftY, 0.2);
+    glVertex3f(centerX, centerY, 0.2);
+    glVertex3f(topRightX, topRightY, 0.2);
+    glEnd();
+
+    // Right polygon
+    glColor3f(0, 1, 0);
+    glBegin(GL_POLYGON);
+    glVertex3f(topRightX, topRightY, 0.2);
+    glVertex3f(bottomRightX, bottomRightY, 0.2);
+    glVertex3f(centerX, centerY, 0.2);
+    glEnd();
+
+    // Bottom polygon
+    glColor3f(1, 0, 0);
+    glBegin(GL_POLYGON);
+    glVertex3f(bottomLeftX, bottomLeftY, 0.2);
+    glVertex3f(centerX, centerY, 0.2);
+    glVertex3f(bottomRightX, bottomRightY, 0.2);
+    glEnd();
+
+    // Left polygon
+    glColor3f(1, 1, 0);
+    glBegin(GL_POLYGON);
+    glVertex3f(topLeftX, topRightX, 0.2);
+    glVertex3f(centerX, centerY, 0.2);
+    glVertex3f(bottomLeftX, bottomRightY, 0.2);
+    glEnd();
 
     glutSwapBuffers();
 }
 
 int main(int argc, char * argv[]) {
-    srand(time(NULL));
     std::cout << "Homework 2\n" << "Output" << "\n";
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH);
