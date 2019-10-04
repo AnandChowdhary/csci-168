@@ -68,7 +68,7 @@ void redraw() {
     // Left polygon
     glColor3f(1, 1, 0);
     glBegin(GL_POLYGON);
-    glVertex3f(topLeftX, topRightX, 0.2);
+    glVertex3f(topLeftX, topLeftY, 0.2);
     glVertex3f(centerX, centerY, 0.2);
     glVertex3f(bottomLeftX, bottomRightY, 0.2);
     glEnd();
@@ -104,21 +104,55 @@ void redraw() {
     glVertex3f(bottomLeftX, bottomLeftY, 0.3);
     glEnd();
 
-    // Diagonal 1
+    // Diagonal Top Left
     glColor3f(1, 1, 1);
     glBegin(GL_LINES);
     glVertex3f(topLeftX, topLeftY, 0.3);
-    glVertex3f(bottomRightX, bottomRightY, 0.3);
+    glVertex3f(centerX, centerY, 0.3);
     glEnd();
 
-    // Diagonal 2
+    // Diagonal Top Right
     glColor3f(1, 1, 1);
     glBegin(GL_LINES);
     glVertex3f(topRightX, topRightY, 0.3);
+    glVertex3f(centerX, centerY, 0.3);
+    glEnd();
+
+    // Diagonal Bottom Left
+    glColor3f(1, 1, 1);
+    glBegin(GL_LINES);
     glVertex3f(bottomLeftX, bottomLeftY, 0.3);
+    glVertex3f(centerX, centerY, 0.3);
+    glEnd();
+
+    // Diagonal Bottom Right
+    glColor3f(1, 1, 1);
+    glBegin(GL_LINES);
+    glVertex3f(bottomRightX, bottomRightY, 0.3);
+    glVertex3f(centerX, centerY, 0.3);
+    glEnd();
+    
+    // POINTS
+    glPointSize(10);
+    glColor3f(0, 1, 1);
+    glBegin(GL_POINTS);
+    
+    glVertex3f(topLeftX, topLeftY, 0.5);
+    glVertex3f(topRightX, topRightY, 0.5);
+    glVertex3f(bottomLeftX, bottomLeftY, 0.5);
+    glVertex3f(bottomRightX, bottomRightY, 0.5);
+    glVertex3f(centerX, centerY, 0.5);
+
     glEnd();
 
     glutSwapBuffers();
+}
+
+void mouseMove(int x, int y) {
+    std::cout << "MOUSE\n" << ((float) x / 700) << "  " << 1.0 - ((float) y / 700) << "\n";
+    topLeftX = ((float) x / 700);
+    topLeftY = (1.0 - ((float) y / 700));
+    redraw();
 }
 
 int main(int argc, char * argv[]) {
@@ -135,6 +169,7 @@ int main(int argc, char * argv[]) {
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
     glutDisplayFunc(redraw);
+    glutMotionFunc(mouseMove);
     glutMainLoop();
     return 0;
 }
