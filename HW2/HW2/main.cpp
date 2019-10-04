@@ -38,6 +38,8 @@ void redraw() {
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glEnable(GL_DEPTH_TEST);
+    
+    // POLYGONS
 
     // Top polygon
     glColor3f(0, 0, 1);
@@ -69,6 +71,51 @@ void redraw() {
     glVertex3f(topLeftX, topRightX, 0.2);
     glVertex3f(centerX, centerY, 0.2);
     glVertex3f(bottomLeftX, bottomRightY, 0.2);
+    glEnd();
+    
+    // LINES
+    glLineWidth(3);
+    
+    // Top
+    glColor3f(1, 1, 1);
+    glBegin(GL_LINES);
+    glVertex3f(topLeftX, topLeftY, 0.3);
+    glVertex3f(topRightX, topRightY, 0.3);
+    glEnd();
+    
+    // Right
+    glColor3f(1, 1, 1);
+    glBegin(GL_LINES);
+    glVertex3f(topRightX, topRightY, 0.3);
+    glVertex3f(bottomRightX, bottomRightY, 0.3);
+    glEnd();
+    
+    // Bottom
+    glColor3f(1, 1, 1);
+    glBegin(GL_LINES);
+    glVertex3f(bottomLeftX, bottomLeftY, 0.3);
+    glVertex3f(bottomRightX, bottomRightY, 0.3);
+    glEnd();
+
+    // Left
+    glColor3f(1, 1, 1);
+    glBegin(GL_LINES);
+    glVertex3f(topLeftX, topLeftY, 0.3);
+    glVertex3f(bottomLeftX, bottomLeftY, 0.3);
+    glEnd();
+
+    // Diagonal 1
+    glColor3f(1, 1, 1);
+    glBegin(GL_LINES);
+    glVertex3f(topLeftX, topLeftY, 0.3);
+    glVertex3f(bottomRightX, bottomRightY, 0.3);
+    glEnd();
+
+    // Diagonal 2
+    glColor3f(1, 1, 1);
+    glBegin(GL_LINES);
+    glVertex3f(topRightX, topRightY, 0.3);
+    glVertex3f(bottomLeftX, bottomLeftY, 0.3);
     glEnd();
 
     glutSwapBuffers();
