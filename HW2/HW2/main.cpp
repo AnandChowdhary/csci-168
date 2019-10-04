@@ -1,6 +1,6 @@
 //
 //  main.cpp
-//  HW1
+//  HW2
 //
 //  Created by Anand Chowdhary on 10/1/19.
 //  Copyright © 2019 Anand Chowdhary. All rights reserved.
