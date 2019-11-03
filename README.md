@@ -4,9 +4,9 @@ Homework and assignments for Santa Clara University (SCU)'s Computer Graphics (C
 
 ## 💻 Contents
 
-1. [Homework 1: Basic polygons and colors](https://github.com/AnandChowdhary/csci-168/tree/master/HW1)
-2. [Homework 2: 2D transformations, matrices, quaternions](https://github.com/AnandChowdhary/csci-168/tree/master/HW2)
-2. Homework 3: Lighting, 3D projection, texture mapping
+1. [Homework 1: Basic polygons, colors](https://github.com/AnandChowdhary/csci-168/tree/master/HW1)
+2. [Homework 2: Mouse events, movement](https://github.com/AnandChowdhary/csci-168/tree/master/HW2)
+2. [Homework 3: 2D transformations](https://github.com/AnandChowdhary/csci-168/tree/master/HW3)
 4. Homework 4: Ray-tracing, shadows, aliasing, bump mapping
 
 ## 📄 License
