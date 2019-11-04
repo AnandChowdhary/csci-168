@@ -19,6 +19,16 @@
 #include <math.h>
 
 int angle = 0;
+float translateX = 0.0;
+float translateY = 0.0;
+
+void mouseMove(int x, int y) {
+    float X = ((float) x / 700);
+    float Y = 1.0 - ((float) y / 700);
+    // Todo: Check if square is pressed before dragging
+    translateX = X - 0.5;
+    translateY = Y - 0.5;
+}
 
 void drawRectangleOnPosition(float x, float y) {
     glPushMatrix();
@@ -55,10 +65,13 @@ void redraw() {
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glEnable(GL_DEPTH_TEST);
+    glPushMatrix();
+    glTranslatef(translateX, translateY, 0);
     angle += 2;
     drawSquare();
     drawRectangleOnPosition(0.25, 0.75);
     drawRectangleOnPosition(0.75, 0.75);
+    glPopMatrix();
     glutSwapBuffers();
 }
 
@@ -77,6 +90,7 @@ int main(int argc, char * argv[]) {
     glLoadIdentity();
     glutDisplayFunc(redraw);
     glutIdleFunc(redraw);
+    glutMotionFunc(mouseMove);
     glutMainLoop();
     return 0;
 }
