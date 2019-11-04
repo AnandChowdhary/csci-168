@@ -21,9 +21,13 @@
 int angle = 0;
 
 void drawRectangleOnPosition(float x, float y) {
-//    glTranslatef(0.5, 0.5, 0.5);
-//    glRotatef(angle, 0, 0, 1);
-//    glTranslatef(-0.5, -0.5, -0.5);
+    glPushMatrix();
+    // To rotate in position, we first translate the object
+    glTranslatef(x, y, 0);
+    // Then rotate it
+    glRotatef(angle, 0, 0, 1);
+    // Then translate it back to its original position
+    glTranslatef(-1 * x, -1 * y, 0);
     glColor3f(1, 1, 0);
     glBegin(GL_POLYGON);
     glVertex3f(x - 0.1, y + 0.05, 0.5);
@@ -31,6 +35,7 @@ void drawRectangleOnPosition(float x, float y) {
     glVertex3f(x + 0.1, y - 0.05, 0.5);
     glVertex3f(x - 0.1, y - 0.05, 0.5);
     glEnd();
+    glPopMatrix();
 }
 
 void drawSquare() {
@@ -50,7 +55,7 @@ void redraw() {
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glEnable(GL_DEPTH_TEST);
-    angle++;
+    angle += 2;
     drawSquare();
     drawRectangleOnPosition(0.25, 0.75);
     drawRectangleOnPosition(0.75, 0.75);
