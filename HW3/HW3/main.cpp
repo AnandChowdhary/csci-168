@@ -21,13 +21,24 @@
 int angle = 0;
 float translateX = 0.0;
 float translateY = 0.0;
+int buttonPressed = 0;
+int currX = 0;
+int currY = 0;
+float scale = 1.0;
+
+bool spacePressed = false;
 
 void mouseMove(int x, int y) {
+    // Todo: Check if square is pressed before dragging
     float X = ((float) x / 700);
     float Y = 1.0 - ((float) y / 700);
-    // Todo: Check if square is pressed before dragging
-    translateX = X - 0.5;
-    translateY = Y - 0.5;
+    if (buttonPressed != 0) {
+        scale = (float) (1 + ((float) (x - currX) / 100));
+        std::cout << "NEW SCALE " << scale;
+    } else {
+        translateX = X - 0.5;
+        translateY = Y - 0.5;
+    }
 }
 
 void drawRectangleOnPosition(float x, float y) {
@@ -35,7 +46,7 @@ void drawRectangleOnPosition(float x, float y) {
     // To rotate in position, we first translate the object
     glTranslatef(x, y, 0);
     // Then rotate it
-    glRotatef(angle, 0, 0, 1);
+    glRotatef(-1 * angle, 0, 0, 1);
     // Then translate it back to its original position
     glTranslatef(-1 * x, -1 * y, 0);
     glColor3f(1, 1, 0);
@@ -51,6 +62,7 @@ void drawRectangleOnPosition(float x, float y) {
 void drawSquare() {
     glPushMatrix();
     glColor3f(1, 0, 1);
+    glScalef(scale, scale, 1);
     glBegin(GL_POLYGON);
     glVertex3f(0.25, 0.25, 0.2);
     glVertex3f(0.25, 0.75, 0.2);
@@ -75,6 +87,12 @@ void redraw() {
     glutSwapBuffers();
 }
 
+void checkMouseButton(int button, int state, int x, int y) {
+    buttonPressed = button;
+    currX = x;
+    currY = y;
+}
+
 int main(int argc, char * argv[]) {
     std::cout << "Homework 3\n" << "Output" << "\n";
     glutInit(&argc, argv);
@@ -91,6 +109,7 @@ int main(int argc, char * argv[]) {
     glutDisplayFunc(redraw);
     glutIdleFunc(redraw);
     glutMotionFunc(mouseMove);
+    glutMouseFunc(checkMouseButton);
     glutMainLoop();
     return 0;
 }
