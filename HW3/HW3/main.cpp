@@ -33,7 +33,7 @@ void mouseMove(int x, int y) {
     float X = ((float) x / 700);
     float Y = 1.0 - ((float) y / 700);
     if (buttonPressed != 0) {
-        scale = (float) (1 + ((float) (x - currX) / 100));
+        scale = (float) (scale + ((float) (x - currX) / 5000));
         std::cout << "NEW SCALE " << scale;
     } else {
         translateX = X - 0.5;
@@ -51,10 +51,10 @@ void drawRectangleOnPosition(float x, float y) {
     glTranslatef(-1 * x, -1 * y, 0);
     glColor3f(1, 1, 0);
     glBegin(GL_POLYGON);
-    glVertex3f(x - 0.1, y + 0.05, 0.5);
-    glVertex3f(x + 0.1, y + 0.05, 0.5);
-    glVertex3f(x + 0.1, y - 0.05, 0.5);
-    glVertex3f(x - 0.1, y - 0.05, 0.5);
+    glVertex3f(x - 0.2, y + 0.1, 0.5);
+    glVertex3f(x + 0.2, y + 0.1, 0.5);
+    glVertex3f(x + 0.2, y - 0.1, 0.5);
+    glVertex3f(x - 0.2, y - 0.1, 0.5);
     glEnd();
     glPopMatrix();
 }
@@ -62,12 +62,11 @@ void drawRectangleOnPosition(float x, float y) {
 void drawSquare() {
     glPushMatrix();
     glColor3f(1, 0, 1);
-    glScalef(scale, scale, 1);
     glBegin(GL_POLYGON);
-    glVertex3f(0.25, 0.25, 0.2);
-    glVertex3f(0.25, 0.75, 0.2);
-    glVertex3f(0.75, 0.75, 0.2);
-    glVertex3f(0.75, 0.25, 0.2);
+    glVertex3f(-0.5, 0.5, 0.2);
+    glVertex3f(0.5, 0.5, 0.2);
+    glVertex3f(0.5, -0.5, 0.2);
+    glVertex3f(-0.5, -0.5, 0.2);
     glEnd();
     glPopMatrix();
 }
@@ -80,9 +79,10 @@ void redraw() {
     glPushMatrix();
     glTranslatef(translateX, translateY, 0);
     angle += 2;
+    glScalef(scale, scale, 1);
     drawSquare();
-    drawRectangleOnPosition(0.25, 0.75);
-    drawRectangleOnPosition(0.75, 0.75);
+    drawRectangleOnPosition(-0.5, 0.5);
+    drawRectangleOnPosition(0.5, 0.5);
     glPopMatrix();
     glutSwapBuffers();
 }
@@ -103,7 +103,7 @@ int main(int argc, char * argv[]) {
     glClearColor(0.0,0.0,0.0,1.0);
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    glOrtho(0.0,1.0,0.0,1.0,-10.0,10.0);
+    glOrtho(-1.0, 1.0, -1.0, 1.0, -10.0, 10.0);
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
     glutDisplayFunc(redraw);
